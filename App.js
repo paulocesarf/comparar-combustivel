@@ -11,18 +11,18 @@ export default function App() {
     const alcoolNum = parseFloat(precoAlcool);
     const gasolinaNum = parseFloat(precoGasolina);
     
-    if (!isNaN(alcoolNum) && !isNaN(gasolinaNum) && gasolinaNum > 0) {
+    if (!isNaN(alcoolNum) && !isNaN(gasolinaNum) && gasolinaNum > 0) { // verificar valores valido e invalidos
       const relacao = alcoolNum / gasolinaNum;
 
-      // Define se o álcool ou gasolina é mais vantajoso
+      // define vantagem alcool ou gasolina 
       if (relacao < 0.7) {
         setResultado('Abasteça com Álcool');
-        // Calcula o preço ideal da gasolina para equilibrar a vantagem
+        // preço ideal da gasolina
         const gasolinaIdeal = (alcoolNum / 0.7).toFixed(2);
         setMargem(`Para a gasolina ser mais vantajosa, deveria custar R$ ${gasolinaIdeal}`);
       } else {
         setResultado('Abasteça com Gasolina');
-        // Calcula o preço ideal do álcool para equilibrar a vantagem
+        // preço ideal do álcool
         const alcoolIdeal = (gasolinaNum * 0.7).toFixed(2);
         setMargem(`Para o álcool ser mais vantajoso, deveria custar R$ ${alcoolIdeal}`);
       }
@@ -32,35 +32,38 @@ export default function App() {
     }
   };
 
+// front app
   return (
     <View style={styles.container}>
-      <Image source={require('./assets/gasolina.png')} style={styles.image} />
-      <Text style={styles.title}>Comparação de Combustível</Text>
+      <Image source={require('./assets/gasolina.png')} style={styles.imagem} />
+      <Text style={styles.tituloApp}>Comparação de Combustível</Text>
       <TextInput
-        style={styles.input}
+        style={styles.precoGasAlc}
         placeholder="Preço do Álcool (R$)"
         keyboardType="numeric"
         value={precoAlcool}
         onChangeText={setPrecoAlcool}
       />
       <TextInput
-        style={styles.input}
+        style={styles.precoGasAlc}
         placeholder="Preço da Gasolina (R$)"
         keyboardType="numeric"
         value={precoGasolina}
         onChangeText={setPrecoGasolina}
       />
-      <Button title="Calcular" onPress={calcularCombustivel} />
+      <Button title="Calcular" onPress={calcularCombustivel} /> 
       {resultado ? (
-        <View style={styles.result}>
-          <Text style={styles.resultText}>{resultado}</Text>
-          <Text style={styles.resultText}>{margem}</Text>
+        <View style={styles.resultadoCalculo}>
+          <Text style={styles.textoResultado}>{resultado}</Text>
+          <Text style={styles.textoResultado}>{margem}</Text>
         </View>
       ) : null}
     </View>
   );
 }
 
+
+// css
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -68,19 +71,19 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#f5f5f5',
   },
-  image: {
+  imagem: {
     width: 150,
     height: 150,
     alignSelf: 'center',
     marginBottom: 30,
   },
-  title: {
+  tituloApp: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
   },
-  input: {
+  precoGasAlc: {
     borderWidth: 1,
     borderColor: '#ddd',
     padding: 10,
@@ -88,11 +91,11 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginBottom: 20,
   },
-  result: {
+  resultadoCalculo: {
     marginTop: 20,
     alignItems: 'center',
   },
-  resultText: {
+  textoResultado: {
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 10,
